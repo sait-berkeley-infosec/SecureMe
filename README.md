@@ -6,5 +6,14 @@ SecureMe is a simple Android app targeted at platforms 2.3.3+ (which covers 99.3
 
 Getting Started (Windows):
 
-1. Go to https://developer.android.com/sdk/installing/studio.html#download to download Android Studio, which includes the Android SDK.
-2. You'll need the latest version of Java Developer Kit (JDK). 
+1. Download and install the latest Java Developer Kit (JDK): http://www.oracle.com/technetwork/java/javase/downloads/index.html
+2. Download and install https://developer.android.com/sdk/installing/studio.html#download
+3. Download the Android SDK.
+4. Run the Android SDK Manager to download and install the latest version of the following:
+    * Tools: Android SDK Tools
+    * Tools: Android SDK Platform-tools
+    * Tools: Android SDK Build-tools
+    * Android 5.0 (API 21): SDK Platform
+    * Extras: Android Support Repository
+    * Extras: Android Support Library
+5. Import project.

@@ -13,8 +13,7 @@ bin/
 gen/
 
 # Android Studio
-.idea/workspace.xml
-.idea/tasks.xml
+.idea
 
 # Gradle files
 .gradle/
