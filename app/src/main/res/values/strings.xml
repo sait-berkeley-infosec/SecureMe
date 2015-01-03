@@ -4,21 +4,27 @@
     <string name="app_name">SecureMe</string>
     <string name="title_item_detail">Details</string>
 
-    <string name="secure_lock_screen_good">Nice! Looks like you have a secure lock screen!</string>
+    <string name="secure_lock_screen_good">Nice! Looks like you have a secure lock screen.</string>
     <string name="secure_lock_screen_bad">Please enable a PIN.</string>
 
     <string name="encryption_good">Awesome! Your device is encrypted.</string>
     <string name="encryption_bad">Please encrypt your device.</string>
+    <string name="encryption_unavailable">Your device does not support encryption.</string>
 
     <string name="location_on">Great! Your location services are on.</string>
     <string name="location_off">Your location services are off.</string>
 
-    <string name="sim_lock_good">Radical! Your SIM card lock is all set up!</string>
+    <string name="sim_lock_good">Radical! Your SIM card lock is all set up.</string>
     <string name="sim_lock_not_gsm">Your device is non-GSM, so it probably does not use a lockable SIM card.</string>
     <string name="sim_lock_not_found">Your SIM card is absent or unknown.</string>
     <string name="sim_lock_bad">Your SIM card is not securely locked.</string>
 
     <string name="remote_control_good">Sweet! It looks like you have Android Device Manager all set up.</string>
     <string name="remote_control_bad">Please set up Android Device Manager.</string>
+    <string name="secure_lock_screen_button">Open lock screen settings</string>
+    <string name="encryption_button">Open encryption settings</string>
+    <string name="remote_control_open">Open Android Device Manager</string>
+    <string name="remote_control_get">Get Android Device Manager</string>
+    <string name="location_button">Open location settings</string>
 
 </resources>

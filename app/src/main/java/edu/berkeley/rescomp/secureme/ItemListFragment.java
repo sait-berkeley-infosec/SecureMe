@@ -1,5 +1,6 @@
 package edu.berkeley.rescomp.secureme;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,15 +9,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
+import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
 /**
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
  * currently being viewed in a {@link ItemDetailFragment}.
- * <p>
+ * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
@@ -68,6 +69,7 @@ public class ItemListFragment extends ListFragment {
     public ItemListFragment() {
     }
 
+    @TargetApi(11)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +77,8 @@ public class ItemListFragment extends ListFragment {
         int resource = (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) ?
                 android.R.layout.simple_list_item_activated_1 :
                 android.R.layout.simple_list_item_1;
+
+        // TODO: replace with a real list adapter.
         setListAdapter(new ArrayAdapter<SecurityChecklist.SecurityItem>(
                 getActivity(),
                 resource,
@@ -119,7 +123,7 @@ public class ItemListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(SecurityChecklist.ITEMS.get(position).title);
+        mCallbacks.onItemSelected(SecurityChecklist.ITEMS.get(position).getTitle());
     }
 
     @Override

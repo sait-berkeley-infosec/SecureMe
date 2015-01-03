@@ -3,6 +3,9 @@ package edu.berkeley.rescomp.secureme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+
+import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
 
 /**
@@ -12,11 +15,11 @@ import android.support.v4.app.FragmentActivity;
  * lead to a {@link ItemDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
- * <p>
+ * <p/>
  * The activity makes heavy use of fragments. The list of items is a
  * {@link ItemListFragment} and the item details
  * (if present) is a {@link ItemDetailFragment}.
- * <p>
+ * <p/>
  * This activity also implements the required
  * {@link ItemListFragment.Callbacks} interface
  * to listen for item selections.
@@ -77,5 +80,13 @@ public class ItemListActivity extends FragmentActivity
             detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO: Move to proper testing home.
+        Log.i("ItemListActivity", "ItemListActivity.onResume()");
+        SecurityChecklist.checkSettings(this);
     }
 }

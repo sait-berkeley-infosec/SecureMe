@@ -2,9 +2,14 @@ package edu.berkeley.rescomp.secureme;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
+import android.util.Log;
+
+import com.actionbarsherlock.view.MenuItem;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
 
 /**
@@ -12,11 +17,11 @@ import android.view.MenuItem;
  * activity is only used on handset devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link ItemListActivity}.
- * <p>
+ * <p/>
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends ActionBarActivity {
+public class ItemDetailActivity extends SherlockFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +69,13 @@ public class ItemDetailActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO: Move to proper testing home.
+        Log.i("ItemDetailActivity", "ItemDetailActivity.onResume()");
+        SecurityChecklist.checkSettings(this);
     }
 }
