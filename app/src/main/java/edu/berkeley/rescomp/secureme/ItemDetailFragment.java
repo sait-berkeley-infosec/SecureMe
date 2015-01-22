@@ -63,4 +63,15 @@ public class ItemDetailFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mItem != null) {
+            Activity context = getActivity();
+            mItem.update(context);
+            ((TextView) context.findViewById(R.id.item_detail))
+                    .setText(context.getString(mItem.getDetailsId()));
+        }
+    }
 }

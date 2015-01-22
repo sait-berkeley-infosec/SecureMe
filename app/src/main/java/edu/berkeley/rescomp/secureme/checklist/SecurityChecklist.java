@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,8 +77,10 @@ public class SecurityChecklist {
             return detailsId;
         }
 
+        public int getButtonTextId() { return buttonTextId; }
+
         /**
-         * Returns null if no intent string specified.
+         * Returns null if no intent string specified, i.e., when there is not to be a button.
          */
         public Intent getIntent() {
             return (intentString == null) ? null : new Intent(intentString);
@@ -94,10 +96,11 @@ public class SecurityChecklist {
             buttonTextId = R.string.secure_lock_screen_button;
         }
 
+        @Override
         public void update(Context context) {
             ContentResolver cr = context.getContentResolver();
             long pwMode = Settings.Secure.getLong(cr, "lockscreen.password_type",
-                    DevicePolicyManager.PASSWORD_QUALITY_SOMETHING);
+                    DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
 
             if (pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC ||
@@ -116,6 +119,7 @@ public class SecurityChecklist {
             buttonTextId = R.string.encryption_button;
         }
 
+        @Override
         public void update(Context context) {
             DevicePolicyManager devicePolicyManager =
                     (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -124,7 +128,10 @@ public class SecurityChecklist {
                 int status = devicePolicyManager.getStorageEncryptionStatus();
                 if (DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE == status) {
                     detailsId = R.string.encryption_good;
-                    intentString = null;  // TODO: may still want to go to Encryption settings
+                    intentString = null;
+                } else if (DevicePolicyManager.ENCRYPTION_STATUS_UNSUPPORTED == status) {
+                    detailsId = R.string.encryption_unavailable;
+                    intentString = null;
                 } else {
                     detailsId = R.string.encryption_bad;
                     intentString = "android.app.action.START_ENCRYPTION";
@@ -137,34 +144,33 @@ public class SecurityChecklist {
     }
 
     private class RemoteControlItem extends SecurityItem {
-        private Intent admIntent;
+        private Intent admIntentGet;
+        private Intent admIntentOpen;
 
         private RemoteControlItem() {
             super(REMOTE_CONTROL);
+            admIntentGet = new Intent(Intent.ACTION_VIEW);
+            admIntentGet.setData(Uri.parse("market://details?id=" + PACKAGE_DEVICE_MANAGER));
         }
 
         public Intent getIntent() {
-            Intent intent;
-            if (admIntent != null) {
-                intent = admIntent;
-                // admIntent = null;  // TODO: Is this necessary/correct/desired?
-            } else {
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("market://details?id=" + PACKAGE_DEVICE_MANAGER));
-            }
-            return intent;
+            return (admIntentOpen == null) ? admIntentGet : admIntentOpen;
         }
 
+        /**
+         * Sets admIntentOpen to null if Android Device Manager is not installed.
+         */
+        @Override
         public void update(Context context) {
             if (isAppInstalled(context, PACKAGE_DEVICE_MANAGER)) {
                 detailsId = R.string.remote_control_good;
                 buttonTextId = R.string.remote_control_open;
-                admIntent = context.getPackageManager()
+                admIntentOpen = context.getPackageManager()
                         .getLaunchIntentForPackage(PACKAGE_DEVICE_MANAGER);
             } else {
                 detailsId = R.string.remote_control_bad;
                 buttonTextId = R.string.remote_control_get;
-                admIntent = null;
+                admIntentOpen = null;
             }
         }
     }
@@ -176,25 +182,40 @@ public class SecurityChecklist {
             intentString = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
         }
 
+        @Override
         public void update(Context context) {
-            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            boolean locationEnabled = false;
-            try {
-                locationEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            } catch (Exception ignored) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                // KitKat and above
+                int locationMode = Settings.Secure.LOCATION_MODE_OFF;
+                try {
+                    locationMode = Settings.Secure.getInt(context.getContentResolver(),
+                                                          Settings.Secure.LOCATION_MODE);
+                } catch (Settings.SettingNotFoundException e) {
+                    e.printStackTrace();
+                }
+                detailsId = (locationMode != Settings.Secure.LOCATION_MODE_OFF) ?
+                             R.string.location_on : R.string.location_off;
+            } else {
+                // before KitKat
+                String locationProviders = Settings.Secure.getString(
+                        context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+                detailsId = (!TextUtils.isEmpty(locationProviders)) ?  // TODO: is TextUtils necessary?
+                             R.string.location_on : R.string.location_off;
             }
-            detailsId = locationEnabled ? R.string.location_on : R.string.location_off;
         }
     }
 
     protected class SimLockItem extends SecurityItem {
         private SimLockItem() {
             super(SIM_LOCK);
+            buttonTextId = R.string.sim_button;
             // TODO: investigate SIM lock settings intent
         }
 
+        @Override
         public void update(Context context) {
-            TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager telMgr =
+                    (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (telMgr.getPhoneType() != TelephonyManager.PHONE_TYPE_GSM) {
                 detailsId = R.string.sim_lock_not_gsm;
             } else {

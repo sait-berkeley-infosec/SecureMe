@@ -3,7 +3,6 @@ package edu.berkeley.rescomp.secureme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
@@ -85,8 +84,6 @@ public class ItemListActivity extends FragmentActivity
     @Override
     public void onResume() {
         super.onResume();
-        // TODO: Move to proper testing home.
-        Log.i("ItemListActivity", "ItemListActivity.onResume()");
         SecurityChecklist.checkSettings(this);
     }
 }

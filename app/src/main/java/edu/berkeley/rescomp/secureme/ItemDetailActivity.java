@@ -3,13 +3,10 @@ package edu.berkeley.rescomp.secureme;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 
 import com.actionbarsherlock.view.MenuItem;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
 
 /**
@@ -69,13 +66,5 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // TODO: Move to proper testing home.
-        Log.i("ItemDetailActivity", "ItemDetailActivity.onResume()");
-        SecurityChecklist.checkSettings(this);
     }
 }
