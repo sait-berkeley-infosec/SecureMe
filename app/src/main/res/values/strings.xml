@@ -25,6 +25,7 @@
 
     <string name="remote_control_good">Sweet! It looks like you have Android Device Manager all set up.</string>
     <string name="remote_control_bad">Please set up Android Device Manager.</string>
+    <string name="remote_control_unavailable">This device cannot install Android Device Manager because it does not have access to the Google Play Store.</string>
     <string name="remote_control_open">Open Android Device Manager</string>
     <string name="remote_control_get">Get Android Device Manager</string>
 

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +103,8 @@ public class SecurityChecklist {
             long pwMode = Settings.Secure.getLong(cr, "lockscreen.password_type",
                     DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
 
+            Log.i("password_type: ", String.valueOf(pwMode));
+
             if (pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_NUMERIC ||
@@ -144,33 +147,50 @@ public class SecurityChecklist {
     }
 
     private class RemoteControlItem extends SecurityItem {
-        private Intent admIntentGet;
-        private Intent admIntentOpen;
+        private Intent intentGetAdm;
+        // intentOpenAdm should be null if Android Device Manager is not installed
+        private Intent intentOpenAdm;
+        private Context context;
 
         private RemoteControlItem() {
             super(REMOTE_CONTROL);
-            admIntentGet = new Intent(Intent.ACTION_VIEW);
-            admIntentGet.setData(Uri.parse("market://details?id=" + PACKAGE_DEVICE_MANAGER));
+            intentGetAdm = new Intent(Intent.ACTION_VIEW);
+            intentGetAdm.setData(Uri.parse("market://details?id=" + PACKAGE_DEVICE_MANAGER));
         }
 
         public Intent getIntent() {
-            return (admIntentOpen == null) ? admIntentGet : admIntentOpen;
+            if (intentOpenAdm == null) {
+                // Open ADM Play Store page if Play Store is available; null if Play is unavailable
+                return (isPlayStoreAvailable()) ? intentGetAdm : null;
+            } else {
+                return intentOpenAdm;
+            }
+        }
+
+        private boolean isPlayStoreAvailable() {
+            return (context != null
+                    && intentGetAdm.resolveActivity(context.getPackageManager()) != null);
         }
 
         /**
-         * Sets admIntentOpen to null if Android Device Manager is not installed.
+         * Sets intentOpenAdm to null if Android Device Manager is not installed.
          */
         @Override
         public void update(Context context) {
+            this.context = context;
             if (isAppInstalled(context, PACKAGE_DEVICE_MANAGER)) {
                 detailsId = R.string.remote_control_good;
                 buttonTextId = R.string.remote_control_open;
-                admIntentOpen = context.getPackageManager()
+                intentOpenAdm = context.getPackageManager()
                         .getLaunchIntentForPackage(PACKAGE_DEVICE_MANAGER);
             } else {
-                detailsId = R.string.remote_control_bad;
-                buttonTextId = R.string.remote_control_get;
-                admIntentOpen = null;
+                if (isPlayStoreAvailable()) {
+                    detailsId = R.string.remote_control_bad;
+                    buttonTextId = R.string.remote_control_get;
+                    intentOpenAdm = null;
+                } else {
+                    detailsId = R.string.remote_control_unavailable;
+                }
             }
         }
     }

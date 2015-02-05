@@ -1,11 +1,16 @@
 package edu.berkeley.rescomp.secureme;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -59,7 +64,23 @@ public class ItemDetailFragment extends Fragment {
             mItem.update(context);
             ((TextView) rootView.findViewById(R.id.item_detail))
                     .setText(context.getString(mItem.getDetailsId()));
-        }
+
+            Button btnToNextScreen = (Button) rootView.findViewById(R.id.item_detail_button);
+            if (mItem.getIntent() != null) {
+                btnToNextScreen.setText(mItem.getButtonTextId());
+                btnToNextScreen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(mItem.getIntent()));
+                    }
+                });
+                if (btnToNextScreen.getVisibility() != View.VISIBLE) {
+                    btnToNextScreen.setVisibility(View.VISIBLE);
+                }
+            } else if (btnToNextScreen != null) {
+                    btnToNextScreen.setVisibility(View.GONE);
+                }
+            }
 
         return rootView;
     }
