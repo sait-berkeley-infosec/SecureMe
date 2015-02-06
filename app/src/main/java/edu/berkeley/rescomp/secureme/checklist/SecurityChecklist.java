@@ -248,6 +248,7 @@ public class SecurityChecklist {
                         break;
                     default:
                         detailsId =  R.string.sim_lock_bad;
+                        intentString = Settings.ACTION_SECURITY_SETTINGS
                 }
             }
         }
