@@ -166,6 +166,8 @@ public class SecurityChecklist {
         public Intent getIntent() {
             if (intentOpenAntivirus == null) {
                 return (isPlayStoreAvailable()) ? intentGetAntivirus : null;
+            } else {
+                return intentOpenAntivirus;
             }
         }
 
@@ -185,7 +187,7 @@ public class SecurityChecklist {
                 buttonTextId = R.string.antivirus_avast_open;
                 intentOpenAntivirus = context.getPackageManager()
                         .getLaunchIntentForPackage(PACKAGE_AVAST);
-            } else if (isAppInstalled((context, PACKAGE_LOOKOUT)) {
+            } else if (isAppInstalled(context, PACKAGE_LOOKOUT)) {
                 detailsId = R.string.antivirus_good;
                 buttonTextId = R.string.antivirus_lookout_open;
                 intentOpenAntivirus = context.getPackageManager()
