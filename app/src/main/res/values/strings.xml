@@ -20,7 +20,7 @@
     <string name="sim_lock_good">Your SIM card lock is all set up.</string>
     <string name="sim_lock_not_gsm">Your device is non-GSM, so it probably does not use a lockable SIM card.</string>
     <string name="sim_lock_not_found">Your SIM card is absent or unknown.</string>
-    <string name="sim_lock_bad">Your SIM card is not securely locked. You should be able to enable this from your device's Security Settings</string>
+    <string name="sim_lock_bad">Your SIM card is not securely locked. You should be able to enable this from your device\'s Security Settings</string>
     <string name="sim_button">Open security settings</string>
 
     <string name="remote_control_good">It looks like you have Android Device Manager all set up.</string>
@@ -32,7 +32,8 @@
     <string name="antivirus_get">Get Lookout Mobile Security</string>
     <string name="antivirus_good">Looks like you have an antivirus installed</string>
     <string name="antivirus_bad">You do not have an antivirus installed</string>
-    <string name="antivirus_open">Open antivirus</string>
+    <string name="antivirus_lookout_open">Open Lookout</string>
+    <string name="antivirus_avast_open">Open Avast</string>
     <string name="antivirus_unavailable">This device cannot install an antivirus because it does not have access to the Google Play Store.</string>
 
 </resources>

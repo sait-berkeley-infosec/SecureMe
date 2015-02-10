@@ -180,9 +180,14 @@ public class SecurityChecklist {
         @Override
         public void update(Context context) {
             this.context = context;
-            if (isAppInstalled(context, PACKAGE_AVAST) || isAppInstalled((context, PACKAGE_LOOKOUT))) {
+            if (isAppInstalled(context, PACKAGE_AVAST)) {
                 detailsId = R.string.antivirus_good;
-                buttonTextId = R.string.antivirus_open;
+                buttonTextId = R.string.antivirus_avast_open;
+                intentOpenAntivirus = context.getPackageManager()
+                        .getLaunchIntentForPackage(PACKAGE_AVAST);
+            } else if (isAppInstalled((context, PACKAGE_LOOKOUT)) {
+                detailsId = R.string.antivirus_good;
+                buttonTextId = R.string.antivirus_lookout_open;
                 intentOpenAntivirus = context.getPackageManager()
                         .getLaunchIntentForPackage(PACKAGE_LOOKOUT);
             } else {
