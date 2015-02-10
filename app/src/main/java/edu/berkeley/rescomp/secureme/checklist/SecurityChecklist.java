@@ -229,6 +229,7 @@ public class SecurityChecklist {
         private SimLockItem() {
             super(SIM_LOCK);
             buttonTextId = R.string.sim_button;
+            intentString = Settings.ACTION_SECURITY_SETTINGS;
             // TODO: investigate SIM lock settings intent
         }
 
@@ -248,7 +249,6 @@ public class SecurityChecklist {
                         break;
                     default:
                         detailsId =  R.string.sim_lock_bad;
-                        intentString = Settings.ACTION_SECURITY_SETTINGS;
                 }
             }
         }
