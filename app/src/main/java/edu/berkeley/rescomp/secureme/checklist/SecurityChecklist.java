@@ -27,8 +27,11 @@ public class SecurityChecklist {
     public static final String REMOTE_CONTROL = "Remote control";
     public static final String LOCATION = "Location";
     public static final String SIM_LOCK = "SIM lock";
+    public static final String ANTIVIRUS = "Antivirus";
 
     public static final String PACKAGE_DEVICE_MANAGER = "com.google.android.apps.adm";
+    public static final String PACKAGE_LOOKOUT = "com.lookout";
+    public static final String PACKAGE_AVAST = "com.avast.android.mobilesecurity";
 
     public static List<SecurityItem> ITEMS = new ArrayList<SecurityItem>();
 
@@ -42,6 +45,7 @@ public class SecurityChecklist {
         addItem(new RemoteControlItem());
         addItem(new LocationItem());
         addItem(new SimLockItem());
+        addItem(new AntivirusItem());
     }
 
     private static void addItem(SecurityItem item) {
@@ -169,6 +173,60 @@ public class SecurityChecklist {
                 return R.drawable.ic_star_empty;
             } else {
                 return 0;
+            }
+        }
+    }
+
+    private class AntivirusItem extends SecurityItem {
+        private Intent intentGetAntivirus;
+        // intentOpenAntivirus should be null if an antivirus is not installed
+        private Intent intentOpenAntivirus;
+        private Context context;
+
+        private AntivirusItem() {
+            super(ANTIVIRUS);
+            intentGetAntivirus = new Intent(Intent.ACTION_VIEW);
+            intentGetAntivirus.setData(Uri.parse("market://details?id=" + PACKAGE_LOOKOUT));
+            // intentGetAntivirus.setData(Uri.parse("market://details?id=" + PACKAGE_AVAST));
+        }
+
+        public Intent getIntent() {
+            if (intentOpenAntivirus == null) {
+                return (isPlayStoreAvailable()) ? intentGetAntivirus : null;
+            } else {
+                return intentOpenAntivirus;
+            }
+        }
+
+        private boolean isPlayStoreAvailable() {
+            return (context != null
+                    && intentGetAntivirus.resolveActivity(context.getPackageManager()) != null);
+        }
+
+        /**
+         * Sets intentOpenAntivirus to null if an antivirus is not installed.
+         */
+        @Override
+        public void update(Context context) {
+            this.context = context;
+            if (isAppInstalled(context, PACKAGE_AVAST)) {
+                detailsId = R.string.antivirus_good;
+                buttonTextId = R.string.antivirus_avast_open;
+                intentOpenAntivirus = context.getPackageManager()
+                        .getLaunchIntentForPackage(PACKAGE_AVAST);
+            } else if (isAppInstalled(context, PACKAGE_LOOKOUT)) {
+                detailsId = R.string.antivirus_good;
+                buttonTextId = R.string.antivirus_lookout_open;
+                intentOpenAntivirus = context.getPackageManager()
+                        .getLaunchIntentForPackage(PACKAGE_LOOKOUT);
+            } else {
+                if (isPlayStoreAvailable()) {
+                    detailsId = R.string.antivirus_bad;
+                    buttonTextId = R.string.antivirus_get;
+                    intentOpenAntivirus = null;
+                } else {
+                    detailsId = R.string.antivirus_unavailable;
+                }
             }
         }
     }
