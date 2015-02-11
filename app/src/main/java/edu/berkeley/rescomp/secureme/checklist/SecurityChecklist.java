@@ -11,7 +11,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,9 +128,9 @@ public class SecurityChecklist {
         @Override
         public int getIconResource() {
             if (detailsId == R.string.secure_lock_screen_good) {
-                return R.drawable.ic_star_full;
+                return R.drawable.ic_action_accept;
             } else {
-                return R.drawable.ic_star_empty;
+                return R.drawable.ic_action_cancel;
             }
         }
     }
@@ -168,9 +167,9 @@ public class SecurityChecklist {
         @Override
         public int getIconResource() {
             if (detailsId == R.string.encryption_good) {
-                return R.drawable.ic_star_full;
+                return R.drawable.ic_action_accept;
             } else if (detailsId == R.string.encryption_bad) {
-                return R.drawable.ic_star_empty;
+                return R.drawable.ic_action_cancel;
             } else {
                 return 0;
             }
@@ -233,9 +232,9 @@ public class SecurityChecklist {
         @Override
         public int getIconResource() {
             if (detailsId == R.string.antivirus_good) {
-                return R.drawable.ic_star_full;
+                return R.drawable.ic_action_accept;
             } else if (detailsId == R.string.antivirus_bad) {
-                return R.drawable.ic_star_empty;
+                return R.drawable.ic_action_cancel;
             } else {
                 return 0;
             }
@@ -293,9 +292,9 @@ public class SecurityChecklist {
         @Override
         public int getIconResource() {
             if (detailsId == R.string.remote_control_good) {
-                return R.drawable.ic_star_full;
+                return R.drawable.ic_action_accept;
             } else if (detailsId == R.string.remote_control_bad) {
-                return R.drawable.ic_star_empty;
+                return R.drawable.ic_action_cancel;
             } else {
                 return 0;
             }
@@ -363,9 +362,9 @@ public class SecurityChecklist {
         @Override
         public int getIconResource() {
             if (detailsId == R.string.sim_lock_good) {
-                return R.drawable.ic_star_full;
+                return R.drawable.ic_action_accept;
             } else if (detailsId == R.string.sim_lock_bad) {
-                return R.drawable.ic_star_empty;
+                return R.drawable.ic_action_cancel;
             } else {
                 return 0;
             }
