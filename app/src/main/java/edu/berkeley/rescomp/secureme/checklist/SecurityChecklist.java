@@ -229,6 +229,17 @@ public class SecurityChecklist {
                 }
             }
         }
+
+        @Override
+        public int getIconResource() {
+            if (detailsId == R.string.antivirus_good) {
+                return R.drawable.ic_star_full;
+            } else if (detailsId == R.string.antivirus_bad) {
+                return R.drawable.ic_star_empty;
+            } else {
+                return 0;
+            }
+        }
     }
 
     private class RemoteControlItem extends SecurityItem {

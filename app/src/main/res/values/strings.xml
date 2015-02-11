@@ -30,8 +30,8 @@
     <string name="remote_control_get">Get Android Device Manager</string>
 
     <string name="antivirus_get">Get Lookout Mobile Security</string>
-    <string name="antivirus_good">Looks like you have an antivirus installed</string>
-    <string name="antivirus_bad">You do not have an antivirus installed</string>
+    <string name="antivirus_good">Looks like you have an antivirus installed! Make sure you properly set it up.</string>
+    <string name="antivirus_bad">You do not have antivirus software installed.</string>
     <string name="antivirus_lookout_open">Open Lookout</string>
     <string name="antivirus_avast_open">Open Avast</string>
     <string name="antivirus_unavailable">This device cannot install an antivirus because it does not have access to the Google Play Store.</string>
