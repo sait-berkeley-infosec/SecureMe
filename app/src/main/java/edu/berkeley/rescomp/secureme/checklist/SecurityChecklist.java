@@ -81,7 +81,16 @@ public class SecurityChecklist {
         public int getButtonTextId() { return buttonTextId; }
 
         /**
-         * Returns null if no intent string specified, i.e., when there is not to be a button.
+         * Gives the resource id of the icon next to the security item.
+         *
+         * @return resource id of icon; 0 if no icon
+         */
+        public int getIconResource() { return 0; }
+
+        /**
+         * Should return null if there is to be no button.
+         *
+         * @return intent string to associate with button (null if no intent string specified)
          */
         public Intent getIntent() {
             return (intentString == null) ? null : new Intent(intentString);
@@ -103,8 +112,6 @@ public class SecurityChecklist {
             long pwMode = Settings.Secure.getLong(cr, "lockscreen.password_type",
                     DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
 
-            Log.i("password_type: ", String.valueOf(pwMode));
-
             if (pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_NUMERIC ||
@@ -112,6 +119,15 @@ public class SecurityChecklist {
                 detailsId = R.string.secure_lock_screen_good;
             } else {
                 detailsId = R.string.secure_lock_screen_bad;
+            }
+        }
+
+        @Override
+        public int getIconResource() {
+            if (detailsId == R.string.secure_lock_screen_good) {
+                return R.drawable.ic_star_full;
+            } else {
+                return R.drawable.ic_star_empty;
             }
         }
     }
@@ -142,6 +158,17 @@ public class SecurityChecklist {
             } else {
                 detailsId = R.string.encryption_unavailable;
                 intentString = null;
+            }
+        }
+
+        @Override
+        public int getIconResource() {
+            if (detailsId == R.string.encryption_good) {
+                return R.drawable.ic_star_full;
+            } else if (detailsId == R.string.encryption_bad) {
+                return R.drawable.ic_star_empty;
+            } else {
+                return 0;
             }
         }
     }
@@ -191,6 +218,17 @@ public class SecurityChecklist {
                 } else {
                     detailsId = R.string.remote_control_unavailable;
                 }
+            }
+        }
+
+        @Override
+        public int getIconResource() {
+            if (detailsId == R.string.remote_control_good) {
+                return R.drawable.ic_star_full;
+            } else if (detailsId == R.string.remote_control_bad) {
+                return R.drawable.ic_star_empty;
+            } else {
+                return 0;
             }
         }
     }
@@ -250,6 +288,17 @@ public class SecurityChecklist {
                     default:
                         detailsId =  R.string.sim_lock_bad;
                 }
+            }
+        }
+
+        @Override
+        public int getIconResource() {
+            if (detailsId == R.string.sim_lock_good) {
+                return R.drawable.ic_star_full;
+            } else if (detailsId == R.string.sim_lock_bad) {
+                return R.drawable.ic_star_empty;
+            } else {
+                return 0;
             }
         }
     }

@@ -1,13 +1,17 @@
 package edu.berkeley.rescomp.secureme;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
@@ -69,21 +73,11 @@ public class ItemListFragment extends ListFragment {
     public ItemListFragment() {
     }
 
-    @TargetApi(11)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int resource = (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) ?
-                android.R.layout.simple_list_item_activated_1 :
-                android.R.layout.simple_list_item_1;
-
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<SecurityChecklist.SecurityItem>(
-                getActivity(),
-                resource,
-                android.R.id.text1,
-                SecurityChecklist.ITEMS));
+        setListAdapter(new IconicAdapter());
     }
 
     @Override
@@ -155,5 +149,39 @@ public class ItemListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    class IconicAdapter extends ArrayAdapter<SecurityChecklist.SecurityItem> {
+        IconicAdapter() {
+            super(getActivity(),
+                    (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) ?
+                            android.R.layout.simple_list_item_activated_1 :
+                            android.R.layout.simple_list_item_1,
+                    android.R.id.text1,
+                    SecurityChecklist.ITEMS);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            SecurityChecklist.SecurityItem item = SecurityChecklist.ITEMS.get(position);
+            ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0, item.getIconResource(), 0);
+//            View view = convertView;
+//            if (view == null) {
+//                LayoutInflater inflater = (LayoutInflater) getActivity()
+//                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                view = inflater.inflate(R.layout.security_list, parent, false);
+//            }
+//            SecurityChecklist.SecurityItem item = SecurityChecklist.ITEMS.get(position);
+//            ImageView icon = (ImageView) view.findViewById(R.id.item_icon);
+//            int iconResource = item.getIconResource();
+//            if (iconResource != 0) {
+//                icon.setImageResource(iconResource);
+//            }
+//            TextView text = (TextView) view.findViewById(R.id.item_list_text);
+//            text.setText(item.getTitle());
+            return view;
+        }
     }
 }

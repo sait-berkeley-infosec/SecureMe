@@ -17,10 +17,10 @@
     <string name="location_off">Your location services are off.</string>
     <string name="location_button">Open location settings</string>
 
-    <string name="sim_lock_good">Your SIM card lock is all set up.</string>
+    <string name="sim_lock_good">Your SIM card is securely locked.</string>
     <string name="sim_lock_not_gsm">Your device is non-GSM, so it probably does not use a lockable SIM card.</string>
     <string name="sim_lock_not_found">Your SIM card is absent or unknown.</string>
-    <string name="sim_lock_bad">Your SIM card is not securely locked. You should be able to enable this from your device's Security Settings</string>
+    <string name="sim_lock_bad">Your SIM card is not securely locked. You should be able to enable this from the security settings menu.</string>
     <string name="sim_button">Open security settings</string>
 
     <string name="remote_control_good">It looks like you have Android Device Manager all set up.</string>
