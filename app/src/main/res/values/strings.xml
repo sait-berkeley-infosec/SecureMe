@@ -4,16 +4,16 @@
     <string name="app_name">SecureMe</string>
     <string name="title_item_detail">Details</string>
 
-    <string name="secure_lock_screen_good">Looks like you have a secure lock screen.</string>
-    <string name="secure_lock_screen_bad">Please enable a PIN.</string>
+    <string name="secure_lock_screen_good">Looks like you have a secure lock screen. Should your device fall into the wrong hands, it will be much harder to access your personal information.</string>
+    <string name="secure_lock_screen_bad">Please secure your lock screen with a PIN/password/pattern.</string>
     <string name="secure_lock_screen_button">Open lock screen settings</string>
 
-    <string name="encryption_good">Your device is encrypted.</string>
-    <string name="encryption_bad">Please encrypt your device.</string>
+    <string name="encryption_good">Your device is encrypted behind a secure lock screen. This prevents an advanced attacker from gaining access to your device.</string>
+    <string name="encryption_bad">Please encrypt your device and ensure you have a secure lock screen to prevent an advanced attacker from gaining access to your device.</string>
     <string name="encryption_unavailable">Your device does not support encryption.</string>
     <string name="encryption_button">Open encryption settings</string>
 
-    <string name="location_on">Great! Your location services are on.</string>
+    <string name="location_on">Your location services are on.</string>
     <string name="location_off">Your location services are off.</string>
     <string name="location_button">Open location settings</string>
 
