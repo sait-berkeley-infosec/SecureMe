@@ -1,5 +1,6 @@
 package edu.berkeley.rescomp.secureme.checklist;
 
+import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,13 +120,18 @@ public class SecurityChecklist {
             boolean patternLockOn = android.provider.Settings.System.getInt(
                     cr,Settings.Secure.LOCK_PATTERN_ENABLED, 0)==1;
 
+            KeyguardManager kgm = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
+            boolean pinLockOn = kgm.isKeyguardSecure();
+
+            /* LEGACY */
             if (pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_NUMERIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
                 detailsId = R.string.secure_lock_screen_good;
+            /* END LEGACY */
             } else {
-                if (patternLockOn) {
+                if (patternLockOn || pinLockOn) {
                     detailsId = R.string.secure_lock_screen_good;
                 } else {
                     detailsId = R.string.secure_lock_screen_bad;
