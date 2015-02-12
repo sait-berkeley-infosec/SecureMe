@@ -115,13 +115,20 @@ public class SecurityChecklist {
             long pwMode = Settings.Secure.getLong(cr, "lockscreen.password_type",
                     DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
 
+            boolean patternLockOn = android.provider.Settings.System.getInt(
+                    cr,Settings.Secure.LOCK_PATTERN_ENABLED, 0)==1;
+
             if (pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_NUMERIC ||
                     pwMode == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
                 detailsId = R.string.secure_lock_screen_good;
             } else {
-                detailsId = R.string.secure_lock_screen_bad;
+                if (patternLockOn) {
+                    detailsId = R.string.secure_lock_screen_good;
+                } else {
+                    detailsId = R.string.secure_lock_screen_bad;
+                }
             }
         }
 
