@@ -252,7 +252,7 @@ public class SecurityChecklist {
             } else if (detailsId == R.string.antivirus_bad) {
                 return R.drawable.ic_action_cancel;
             } else {
-                return 0;
+                return R.drawable.ic_action_warning;
             }
         }
     }
@@ -312,7 +312,7 @@ public class SecurityChecklist {
             } else if (detailsId == R.string.remote_control_bad) {
                 return R.drawable.ic_action_cancel;
             } else {
-                return 0;
+                return R.drawable.ic_action_warning;
             }
         }
     }
