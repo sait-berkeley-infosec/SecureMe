@@ -41,12 +41,12 @@ public class SecurityChecklist {
     public static final SecurityChecklist INSTANCE = new SecurityChecklist();
 
     private SecurityChecklist() {
-        addItem(new LockScreenItem());
+        addItem(new LocationItem());
+        addItem(new AntivirusItem());
+        addItem(new SimLockItem());
         addItem(new EncryptionItem());
         addItem(new RemoteControlItem());
-        addItem(new LocationItem());
-        addItem(new SimLockItem());
-        addItem(new AntivirusItem());
+        addItem(new LockScreenItem());
     }
 
     private static void addItem(SecurityItem item) {
@@ -184,6 +184,8 @@ public class SecurityChecklist {
                 return R.drawable.ic_action_accept;
             } else if (detailsId == R.string.encryption_bad) {
                 return R.drawable.ic_action_cancel;
+            } else if (detailsId == R.string.encryption_unavailable) {
+                return R.drawable.ic_action_warning;
             } else {
                 return 0;
             }
@@ -341,6 +343,17 @@ public class SecurityChecklist {
                         context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
                 detailsId = (!TextUtils.isEmpty(locationProviders)) ?  // TODO: is TextUtils necessary?
                              R.string.location_on : R.string.location_off;
+            }
+        }
+
+        @Override
+        public int getIconResource() {
+            if (detailsId == R.string.location_on) {
+                return R.drawable.ic_action_location_found;
+            } else if (detailsId == R.string.location_off) {
+                return R.drawable.ic_action_location_off;
+            } else {
+                return 0;
             }
         }
     }
