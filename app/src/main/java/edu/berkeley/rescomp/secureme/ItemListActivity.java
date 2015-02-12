@@ -1,8 +1,10 @@
 package edu.berkeley.rescomp.secureme;
 
+import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import edu.berkeley.rescomp.secureme.checklist.SecurityChecklist;
 
@@ -51,7 +53,15 @@ public class ItemListActivity extends FragmentActivity
                     .setActivateOnItemClick(true);
         }
 
-        // TODO: If exposing deep links into your app, handle intents here.
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                FragmentManager manager = getSupportFragmentManager();
+                if (manager != null) {
+                    manager.findFragmentById(R.id.item_list).onResume();
+                }
+            }
+        });
     }
 
     /**

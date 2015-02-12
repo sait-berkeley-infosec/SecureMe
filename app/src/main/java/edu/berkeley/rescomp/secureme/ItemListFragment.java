@@ -151,6 +151,12 @@ public class ItemListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        SecurityChecklist.checkSettings(getActivity());
+    }
+
     class IconicAdapter extends ArrayAdapter<SecurityChecklist.SecurityItem> {
         IconicAdapter() {
             super(getActivity(),
