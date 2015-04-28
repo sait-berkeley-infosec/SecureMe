@@ -3,8 +3,8 @@
 SecureMe is a simple Android app targeted at versions 2.2+ (which covers 100% of all Android versions in use) that automagically helps users secure their Android devices by checking for and explaining common security settings. For example, securing a lock screen with a password, PIN, or pattern lock; enabling encryption; enabling remote access with Android Device Manager; and other security-related configurations. Instead of users having to look up how to secure their devices, SecureMe tells users at a quick glance which security settings they have configured well (either manually or by default) and which settings they should take a look at to improve the security of their Android device.
 
 
-## Development 
-# Getting Started (Windows):
+# Development 
+## Getting Started (Windows):
 
 1. Download and install the latest [Java Developer Kit (JDK)](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
 2. Download and install [Android Studio](https://developer.android.com/sdk/installing/studio.html#download) and the Android SDK.
